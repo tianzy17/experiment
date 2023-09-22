@@ -568,6 +568,7 @@ delta4a=mean(delta4(start:end));
 delta5a=mean(delta5(start:end));
 delta6a=mean(delta6(start:end));
 delta8a=mean(delta8(start:end));
+save ManualStep1R30v10.mat
 
 % for i=start:1:(row-1)
 %     syms Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4 Fy5 Fy6 Ftx1 Ftx2 Ftx3 Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4 Fty5 Fty6 

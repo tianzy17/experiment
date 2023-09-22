@@ -1,0 +1,17 @@
+function [Flag]=Judge(Fty,Alpha)
+%如果正确，Flag返回0，否则返回错误的点的数量
+    [row,col]=size(Fty);
+    FlagFty=zeros(4,6);
+    FlagAlpha=zeros(4,6);
+    for i=1:1:col
+        for j=2:1:4
+            if abs(Fty(j,i))>abs(Fty(1,i))
+                FlagFty(j,i)=1;
+            end
+            if abs(Alpha(j,i))>abs(Alpha(1,i))
+                FlagAlpha(j,i)=1;
+            end
+        end
+    end
+    Flag=xor(FlagFty,FlagAlpha);
+end
