@@ -31,7 +31,7 @@ for i=1:1:7
     [alphaa(i,:),axa(i,:),aycena(i,:),thetaa(i,:),deltaa(i,:)]=...
         PreCalculate(file_name{i},start(i));
 end
-save main4.mat
+save main5.mat
 
 Flag=JudgeAll(alphaa,aycena,axa,thetaa,deltaa);
 PlotAllDirection(alphaa,aycena,axa,thetaa,deltaa);

@@ -35,9 +35,10 @@ axa=-abs(axa);
     A8=zeros(1,36);
     A8([11 12 32])=[1 1 1];
     B8=m3*aycena(3);
-%     feq9=Fy5*a3-Fy6*b3-FJ23y*d3==0;
+ %     feq9=Fy5*a3-Fy6*b3-FJ23y*d3==0;
+ %     公式错误，修改为feq9=Fy5*a3-Fy6*b3+FJ23y*d3==0;
     A9=zeros(1,36);
-    A9([11 12 32])=[a3 -b3 -d3];
+    A9([11 12 32])=[a3 -b3 d3];
     B9=0;
     
 %     feq10=FJ12x+FJ11x*cosd(thetaa(1))-FJ11y*sind(thetaa(1))==0;
