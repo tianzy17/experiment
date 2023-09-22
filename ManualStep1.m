@@ -1,4 +1,4 @@
-%%不用solve函数求解方程，按矩阵运算求解，矩阵生产方式按先全零再补充
+%%手动单次解算第一步
 clc;clear;
 close all
 a1=(3400-967)/1000;
@@ -104,6 +104,7 @@ for i=1:1:n
 end
 figure(24)
 plot(v)
+title('速度')
 
 delta1=medfilt1(delta1);
 delta8=medfilt1(delta8);
@@ -128,6 +129,7 @@ delta6=medfilt1(delta6);
 
 figure(7)
 hold on
+title('转角')
 plot(delta1*180/pi,'.')
 plot(delta3*180/pi)
 plot(delta4*180/pi)
@@ -147,6 +149,7 @@ theta(:,2)=medfilt1(theta(:,2));
 
 figure(22)
 hold on
+title('车间夹角')
 plot(theta(:,1))
 plot(theta(:,2))
 % A1=PositionAxle1-APositionAxle1;
@@ -187,14 +190,14 @@ hold on
 plot(aycen(:,1))
 plot(aycen(:,2))
 plot(aycen(:,3))
-title('ay')
+title('a_y')
 
 figure(25)
 hold on
 plot(ax(:,1))
 plot(ax(:,2))
 plot(ax(:,3))
-title('ax')
+title('a_x')
 
 PositionAxle2=(PositionAxle1*7150+PositionAxle34*1500)/8650;
 PositionAxle3=(PositionAxle1*900+PositionAxle34*7750)/8650;
@@ -234,6 +237,7 @@ PositionAxle78=(PositionAxle7+PositionAxle8)/2;
 %画轨迹
 figure(2)
 hold on
+title('轨迹')
 % plot(PositionAxle6p(:,1),PositionAxle6p(:,2));
 plot(PositionAxle34(:,1),PositionAxle34(:,2));
 
@@ -404,6 +408,7 @@ anglecar(:,3)=medfilt1(anglecar(:,3));
 
 figure(20)
 hold on
+title('速度方向')
 plot(anglev(:,1))
 plot(anglev(:,2))
 plot(anglev(:,3))
@@ -413,6 +418,7 @@ plot(anglev(:,6))
 
 figure(23)
 hold on
+title('车身方向')
 plot(anglecar(:,1))
 plot(anglecar(:,2))
 plot(anglecar(:,3))

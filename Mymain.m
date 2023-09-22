@@ -33,7 +33,7 @@ for i=1:1:7
 end
 save main5.mat
 
-Flag=JudgeAll(alphaa,aycena,axa,thetaa,deltaa);
+[Flag,f]=JudgeAll(alphaa,aycena,axa,thetaa,deltaa);
 PlotAllDirection(alphaa,aycena,axa,thetaa,deltaa);
 
 close all;

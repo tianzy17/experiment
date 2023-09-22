@@ -22,7 +22,7 @@ function []=PlotAllDirection(alphaa,aycena,axa,thetaa,deltaa)
 
     for i=1:1:8 %ax方向
         for j=1:1:8 %ay方向
-            Ftya=SolveFtya(DirectionAccX(i,:),DirectionAccY(j,:),aycena,axa,thetaa,deltaa,alphaa);
+            [Ftya,result]=SolveFtya(DirectionAccX(i,:),DirectionAccY(j,:),aycena,axa,thetaa,deltaa,alphaa);
             order=8*(i-1)+j;
             figure(order)
             hold on
@@ -30,7 +30,7 @@ function []=PlotAllDirection(alphaa,aycena,axa,thetaa,deltaa)
             PlotFtyAlpha(Ftya,alphaa,R)
             saveas(gcf,[pwd,'\AllFigure\AllR\','R30_',...
                 num2str(order),'.png'])
-            figure(8*(i-1)+j+64)
+            figure(order+64)
             R=20;
             PlotFtyAlpha(Ftya,alphaa,R)
             saveas(gcf,[pwd,'\AllFigure\AllR\','R20_',...

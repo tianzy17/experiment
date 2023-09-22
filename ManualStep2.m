@@ -1,9 +1,15 @@
-syms Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4 Fy5 Fy6 Ftx1 Ftx2 Ftx3 Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4 Fty5 Fty6 
-syms FJ11x FJ11y FJ12x FJ12y FJ22x FJ22y FJ23x FJ23y f k16 k25 k34
-
+%%
+thetaa=thetaa*pi/180;
+delta1=delta1a*pi/180;
+delta2=delta3a*pi/180;
+delta3=delta4a*pi/180;
+delta4=delta5a*pi/180;
+delta5=delta6a*pi/180;
+delta6=delta8a*pi/180;
+% %正式代码
 aycena=-abs(aycena);
-axa=-abs(axa);
-%     feq1=Fx1+Fx2+FJ11x==0;
+% axa=abs(axa);
+%     feq1=Fx1+Fx2+FJ11x==m1*ax1;
     A1=zeros(1,36);
     A1([1 2 25])=[1 1 1];
     B1=m1*axa(1);
@@ -15,7 +21,7 @@ axa=-abs(axa);
     A3=zeros(1,36);
     A3([7 8 26])=[a1 -b1 -c1];
     B3=0;
-%     feq4=Fx3+Fx4+FJ12x+FJ22x==0;
+%     feq4=Fx3+Fx4+FJ12x+FJ22x==m2*ax2;
     A4=zeros(1,36);
     A4([3 4 27 29])=[1 1 1 1];
     B4=m2*axa(2);
@@ -27,7 +33,7 @@ axa=-abs(axa);
     A6=zeros(1,36);
     A6([9 10 28 30])=[a2 -b2 d2 -c2];
     B6=0;
-%     feq7=Fx5+Fx6+FJ23x==0;
+%     feq7=Fx5+Fx6+FJ23x==m3*ax3;
     A7=zeros(1,36);
     A7([5 6 31])=[1 1 1];
     B7=m3*axa(3);
@@ -41,21 +47,21 @@ axa=-abs(axa);
     A9([11 12 32])=[a3 -b3 d3];
     B9=0;
     
-%     feq10=FJ12x+FJ11x*cosd(thetaa(1))-FJ11y*sind(thetaa(1))==0;
+%     feq10=FJ12x+FJ11x*cos(thetaa(1))-FJ11y*sin(thetaa(1))==0;
     A10=zeros(1,36);
-    A10([25 26 27])=[cosd(thetaa(1)) -sind(thetaa(1)) 1];
+    A10([25 26 27])=[cos(thetaa(1)) -sin(thetaa(1)) 1];
     B10=0;
-%     feq11=FJ12y+FJ11x*sind(thetaa(1))+FJ11y*cosd(thetaa(1))==0;
+%     feq11=FJ12y+FJ11x*sin(thetaa(1))+FJ11y*cos(thetaa(1))==0;
     A11=zeros(1,36);
-    A11([25 26 28])=[sind(thetaa(1)) cosd(thetaa(1)) 1];
+    A11([25 26 28])=[sin(thetaa(1)) cos(thetaa(1)) 1];
     B11=0;
-%     feq12=FJ23x+FJ22x*cosd(thetaa(2))-FJ22y*sind(thetaa(2))==0;
+%     feq12=FJ23x+FJ22x*cos(thetaa(2))-FJ22y*sin(thetaa(2))==0;
     A12=zeros(1,36);
-    A12([29 30 31])=[cosd(thetaa(2)) -sind(thetaa(2)) 1];
+    A12([29 30 31])=[cos(thetaa(2)) -sin(thetaa(2)) 1];
     B12=0;
-%     feq13=FJ23y+FJ22x*sind(thetaa(2))+FJ22y*cosd(thetaa(2))==0;
+%     feq13=FJ23y+FJ22x*sin(thetaa(2))+FJ22y*cos(thetaa(2))==0;
     A13=zeros(1,36);
-    A13([29 30 32])=[sind(thetaa(2)) cosd(thetaa(2)) 1];
+    A13([29 30 32])=[sin(thetaa(2)) cos(thetaa(2)) 1];
     B13=0;
     
 %     feq14=Ftx2+f*G2==0;
@@ -104,53 +110,53 @@ axa=-abs(axa);
     A24([22 36])=[1 -alphaa(4)];
     B24=0;
     
-%     feq25=Fx1-Ftx1*cosd(delta1a)+Fty1*sind(delta1a)==0;
+%     feq25=Fx1-Ftx1*cos(delta1)+Fty1*sin(delta1)==0;
     A25=zeros(1,36);
-    A25([1 13 19])=[1 -cosd(delta1a) sind(delta1a)];
+    A25([1 13 19])=[1 -cos(delta1) sin(delta1)];
     B25=0;
-%     feq26=Fy1-Ftx1*sind(delta1a)-Fty1*cosd(delta1a)==0;
+%     feq26=Fy1-Ftx1*sin(delta1)-Fty1*cos(delta1)==0;
     A26=zeros(1,36);
-    A26([7 13 19])=[1 -sind(delta1a) -cosd(delta1a)];
+    A26([7 13 19])=[1 -sin(delta1) -cos(delta1)];
     B26=0;
-%     feq27=Fx2-Ftx2*cosd(delta3a)+Fty2*sind(delta3a)==0;
+%     feq27=Fx2-Ftx2*cos(delta2)+Fty2*sin(delta2)==0;
     A27=zeros(1,36);
-    A27([2 14 20])=[1 -cosd(delta3a) sind(delta3a)];
+    A27([2 14 20])=[1 -cos(delta2) sin(delta2)];
     B27=0;
-%     feq28=Fy2-Ftx2*sind(delta3a)-Fty2*cosd(delta3a)==0;
+%     feq28=Fy2-Ftx2*sin(delta2)-Fty2*cos(delta2)==0;
     A28=zeros(1,36);
-    A28([8 14 20])=[1 -sind(delta3a) -cosd(delta3a)];
+    A28([8 14 20])=[1 -sin(delta2) -cos(delta2)];
     B28=0;
-%     feq29=Fx3-Ftx3*cosd(delta4a)+Fty3*sind(delta4a)==0;
+%     feq29=Fx3-Ftx3*cos(delta3)+Fty3*sin(delta3)==0;
     A29=zeros(1,36);
-    A29(3)=1;A29(15)=-cosd(delta4a);A29(21)=sind(delta4a);
+    A29(3)=1;A29(15)=-cos(delta3);A29(21)=sin(delta3);
     B29=0;
-%     feq30=Fy3-Ftx3*sind(delta4a)-Fty3*cosd(delta4a)==0;
+%     feq30=Fy3-Ftx3*sin(delta3)-Fty3*cos(delta3)==0;
     A30=zeros(1,36);
-    A30(9)=1;A30(15)=-sind(delta4a);A30(21)=-cosd(delta4a);
+    A30(9)=1;A30(15)=-sin(delta3);A30(21)=-cos(delta3);
     B30=0;
-%     feq31=Fx4-Ftx4*cosd(delta5a)+Fty4*sind(delta5a)==0;
+%     feq31=Fx4-Ftx4*cos(delta4)+Fty4*sin(delta4)==0;
     A31=zeros(1,36);
-    A31(4)=1;A31(16)=-cosd(delta5a);A31(22)=sind(delta5a);
+    A31(4)=1;A31(16)=-cos(delta4);A31(22)=sin(delta4);
     B31=0;
-%     feq32=Fy4-Ftx4*sind(delta5a)-Fty4*cosd(delta5a)==0;
+%     feq32=Fy4-Ftx4*sin(delta4)-Fty4*cos(delta4)==0;
     A32=zeros(1,36);
-    A32(10)=1;A32(16)=-sind(delta5a);A32(22)=-cosd(delta5a);
+    A32(10)=1;A32(16)=-sin(delta4);A32(22)=-cos(delta4);
     B32=0;
-%     feq33=Fx5-Ftx5*cosd(delta6a)+Fty5*sind(delta6a)==0;
+%     feq33=Fx5-Ftx5*cos(delta5)+Fty5*sin(delta5)==0;
     A33=zeros(1,36);
-    A33(5)=1;A33(17)=-cosd(delta6a);A33(23)=sind(delta6a);
+    A33(5)=1;A33(17)=-cos(delta5);A33(23)=sin(delta5);
     B33=0;
-%     feq34=Fy5-Ftx5*sind(delta6a)-Fty5*cosd(delta6a)==0;
+%     feq34=Fy5-Ftx5*sin(delta5)-Fty5*cos(delta5)==0;
     A34=zeros(1,36);
-    A34(11)=1;A34(17)=-sind(delta6a);A34(23)=-cosd(delta6a);
+    A34(11)=1;A34(17)=-sin(delta5);A34(23)=-cos(delta5);
     B34=0;
-%     feq35=Fx6-Ftx6*cosd(delta8a)+Fty6*sind(delta8a)==0;
+%     feq35=Fx6-Ftx6*cos(delta6)+Fty6*sin(delta6)==0;
     A35=zeros(1,36);
-    A35(6)=1;A35(18)=-cosd(delta8a);A35(24)=sind(delta8a);
+    A35(6)=1;A35(18)=-cos(delta6);A35(24)=sin(delta6);
     B35=0;
-%     feq36=Fy6-Ftx6*sind(delta8a)-Fty6*cosd(delta8a)==0;
+%     feq36=Fy6-Ftx6*sin(delta6)-Fty6*cos(delta6)==0;
     A36=zeros(1,36);
-    A36(12)=1;A36(18)=-sind(delta8a);A36(24)=-cosd(delta8a);
+    A36(12)=1;A36(18)=-sin(delta6);A36(24)=-cos(delta6);
     B36=0;
 
 %     allanswer=solve([feq1 feq2 feq3 feq4 feq5 feq6 feq7 feq8 feq9 feq10 feq11 feq12 feq13 feq14 feq15 ...
@@ -167,5 +173,18 @@ axa=-abs(axa);
 %     ka(:)=[double(allanswer.k16) double(allanswer.k25) double(allanswer.k34)];
 %     Ftya(:)=[double(allanswer.Fty1) double(allanswer.Fty2) double(allanswer.Fty3) double(allanswer.Fty4) ...
 %         double(allanswer.Fty5) double(allanswer.Fty6)];
-    ka(:)=temp0(34:36);
-    Ftya(:)=temp0(19:24);
+
+
+    tag1=["Fx1" "Fx2" "Fx3" "Fx4" "Fx5" "Fx6" "Fy1" "Fy2" "Fy3" "Fy4"...
+        "Fy5" "Fy6" "Ftx1" "Ftx2" "Ftx3" "Ftx4" "Ftx5" "Ftx6" "Fty1"...
+        "Fty2" "Fty3" "Fty4" "Fty5" "Fty6" "FJ11x" "FJ11y" "FJ12x" ...
+        "FJ12y" "FJ22x" "FJ22y" "FJ23x" "FJ23y" "f" "k16" "k25" "k34"]';
+    tag2=["N" "N" "N" "N" "N" "N" "N" "N" "N" "N"...
+    "N" "N" "N" "N" "N" "N" "N" "N" "N"...
+    "N" "N" "N" "N" "N" "N" "N" "N" ...
+    "N" "N" "N" "N" "N" "1" "N/rad" "N/rad" "N/rad"]';
+    tag3=["Alpha1" "Alpha2" "Alpha3" "Alpha4" "Alpha5" "Alpha6"]';
+    tag4=["deg" "deg" "deg" "deg" "deg" "deg"]';
+    Alpha=(alphaa')*180/pi;
+    temp0(33)=temp0(33)/9.8;
+    result=[tag1 temp0 tag2;tag3 Alpha tag4];

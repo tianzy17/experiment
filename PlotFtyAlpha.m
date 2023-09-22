@@ -15,6 +15,7 @@ function []=PlotFtyAlpha(Fty,Alpha,R)
     % end
     % Flag=xor(FlagFty,FlagAlpha);
 %画图
+    Alpha=Alpha*180/pi;
     for i=1:1:col
         subplot(2,3,i);
         hold on
