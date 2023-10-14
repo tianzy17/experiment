@@ -14,5 +14,6 @@ function [Flag]=Judge(Fty,Alpha)
         end
     end
     FlagAlpha
+    FlagFty
     Flag=xor(FlagFty,FlagAlpha);
 end
