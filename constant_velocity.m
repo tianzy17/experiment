@@ -22,7 +22,7 @@ G5=4395;
 m1=G1+G2;%
 m2=G3+G4;
 m3=G5+G6;%
-file_name = 'Mc2_25_R30_ready';
+file_name = 'zxmc1_60km_1-1';
 data = readtable([file_name, '.csv']); 
 data.veh_head(1)
 %%
@@ -113,6 +113,7 @@ for i=1:1:n
     PositionJoint23_Mc2(i,:)=[PositionAxle5(i,1)-(d3-a3)*cos(Azimuth3(i)) PositionAxle5(i,2)-(d3-a3)*sin(Azimuth3(i))];
     
     ay(i,:)=[data.imu_acc1_y(5*i-4) data.imu_acc2_y(5*i-4) data.imu_acc3_y(5*i-4)];
+    ax(i,:)=[data.imu_acc1_x(5*i-4) data.imu_acc2_x(5*i-4) data.imu_acc3_x(5*i-4)];
 
 end
 figure(15)
@@ -129,6 +130,10 @@ plot(ay(:,1))
 hold on
 plot(ay(:,2))
 plot(ay(:,3))
+
+plot(ax(:,1),'--')
+plot(ax(:,2),'--')
+plot(ax(:,3),'--')
 
 figure(10)
 plot(Angle(:,1)/pi*180)

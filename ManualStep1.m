@@ -22,13 +22,11 @@ G5=4395;
 m1=G1+G2;%
 m2=G3+G4;
 m3=G5+G6;%
-%R30v5/v10ready从10开始
-%R30v15从524开始
-%R30v20ready从41开始
+%R30v5/v10ready从10开始 R30v15从524开始 R30v20ready从41开始
 %R20v10ready/v15ready/v20从10开始
 
-start=10+1;
-file_name = 'Mc1R30v10ready';
+start=524+1;
+file_name = 'zxmc1_60km_1-1';
 data = readtable([file_name, '.csv']); 
 data.veh_head(1)
 %%
@@ -69,12 +67,14 @@ for i=1:1:n
     theta(i,:)=[data.angle12(5*i-4) data.angle23(5*i-4)];
 %%
 %加速度，橫摆角速度（表中单位是rad/s）
-% ay=[table2array(data(:,75)) table2array(data(:,76)) table2array(data(:,77))];
+% ay=[table2array(data(:,75)) table2array(data(:,76))
+% table2array(data(:,77))];
     ax(i,:)=[data.imu_acc1_x(5*i-4) data.imu_acc2_x(5*i-4) data.imu_acc3_x(5*i-4)];
     ay(i,:)=[data.imu_acc1_y(5*i-4) data.imu_acc2_y(5*i-4) data.imu_acc3_y(5*i-4)];
-% omega=[table2array(data(:,36)) table2array(data(:,37)) table2array(data(:,38))];
-% aycen=[ay(:,1)+omega(:,1).^2*(1004-12)/1000 ay(:,2)+omega(:,2).^2*(1024+4)/1000 ay(:,3)-omega(:,3).^2*(1004-12)/1000];
-% aycen=[ay(:,1) ay(:,2) ay(:,3)];
+% omega=[table2array(data(:,36)) table2array(data(:,37))
+% table2array(data(:,38))]; aycen=[ay(:,1)+omega(:,1).^2*(1004-12)/1000
+% ay(:,2)+omega(:,2).^2*(1024+4)/1000
+% ay(:,3)-omega(:,3).^2*(1004-12)/1000]; aycen=[ay(:,1) ay(:,2) ay(:,3)];
 %%
 %RTK放在1轴中间，12铰接点，23铰接点和8轴中间,Mc1头
 % PositionAxle1=table2array(data(:,[90,91]))-table2array(data(1,[90,91]));
@@ -152,37 +152,25 @@ hold on
 title('车间夹角')
 plot(theta(:,1))
 plot(theta(:,2))
-% A1=PositionAxle1-APositionAxle1;
-% A3p=PositionAxle3p-APositionAxle3p;
-% A6p=PositionAxle6p-APositionAxle6p;
-% A8=PositionAxle8-APositionAxle8;
-% ay(:,1)=lowpass(ay(:,1),100,1000);
-% ay(:,2)=lowpass(ay(:,2),100,1000);
+% A1=PositionAxle1-APositionAxle1; A3p=PositionAxle3p-APositionAxle3p;
+% A6p=PositionAxle6p-APositionAxle6p; A8=PositionAxle8-APositionAxle8;
+% ay(:,1)=lowpass(ay(:,1),100,1000); ay(:,2)=lowpass(ay(:,2),100,1000);
 % ay(:,3)=lowpass(ay(:,3),100,1000);
 figure(1)
 hold on
-% plot(-ay(:,1))
-% plot(-ay(:,2))
-% plot(-ay(:,3))
-% lpFilt = designfilt('lowpassfir','PassbandFrequency',0.25, ...
+% plot(-ay(:,1)) plot(-ay(:,2)) plot(-ay(:,3)) lpFilt =
+% designfilt('lowpassfir','PassbandFrequency',0.25, ...
 %          'StopbandFrequency',0.35,'PassbandRipple',0.5, ...
 %          'StopbandAttenuation',65,'DesignMethod','kaiserwin');
-% ay(:,1)=filtfilt(lpFilt,ay(:,1));
-% ay(:,2)=filtfilt(lpFilt,ay(:,2));
+% ay(:,1)=filtfilt(lpFilt,ay(:,1)); ay(:,2)=filtfilt(lpFilt,ay(:,2));
 % ay(:,3)=filtfilt(lpFilt,ay(:,3));
 aycen=[ay(:,1) ay(:,2) ay(:,3)];
 
 
 % %调整头尾
-    % aycen=[ay(:,3) ay(:,2) ay(:,1)];
-    % aycen=-aycen;
-    % temp1=PositionAxle1;
-    % temp2=PositionAxle3p;
-    % temp3=PositionAxle6p;
-    % temp4=PositionAxle8;
-    % PositionAxle1=temp4;
-    % PositionAxle3p=temp3;
-    % PositionAxle6p=temp2;
+    % aycen=[ay(:,3) ay(:,2) ay(:,1)]; aycen=-aycen; temp1=PositionAxle1;
+    % temp2=PositionAxle3p; temp3=PositionAxle6p; temp4=PositionAxle8;
+    % PositionAxle1=temp4; PositionAxle3p=temp3; PositionAxle6p=temp2;
     % PositionAxle8=temp1;
 
 figure(1)
@@ -209,20 +197,16 @@ PositionAxle12=(PositionAxle1+PositionAxle2)/2;
 PositionAxle78=(PositionAxle7+PositionAxle8)/2;
 %%
 %换头
-% temp=[PositionAxle8 PositionAxle78 PositionAxle7 PositionAxle6 PositionAxle56 PositionAxle5...
-%     PositionAxle4 PositionAxle34 PositionAxle3 PositionAxle2 PositionAxle12 PositionAxle1];
-% PositionAxle1=temp(:,[1 2]);
-% PositionAxle12=temp(:,[3 4]);
-% PositionAxle2=temp(:,[5 6]);
-% PositionAxle3=temp(:,[7 8]);
-% PositionAxle34=temp(:,[9 10]);
-% PositionAxle4=temp(:,[11 12]);
-% PositionAxle5=temp(:,[13 14]);
-% PositionAxle56=temp(:,[15 16]);
-% PositionAxle6=temp(:,[17 18]);
-% PositionAxle7=temp(:,[19 20]);
-% PositionAxle78=temp(:,[21 22]);
-% PositionAxle8=temp(:,[23 24]);
+% temp=[PositionAxle8 PositionAxle78 PositionAxle7 PositionAxle6
+% PositionAxle56 PositionAxle5...
+%     PositionAxle4 PositionAxle34 PositionAxle3 PositionAxle2
+%     PositionAxle12 PositionAxle1];
+% PositionAxle1=temp(:,[1 2]); PositionAxle12=temp(:,[3 4]);
+% PositionAxle2=temp(:,[5 6]); PositionAxle3=temp(:,[7 8]);
+% PositionAxle34=temp(:,[9 10]); PositionAxle4=temp(:,[11 12]);
+% PositionAxle5=temp(:,[13 14]); PositionAxle56=temp(:,[15 16]);
+% PositionAxle6=temp(:,[17 18]); PositionAxle7=temp(:,[19 20]);
+% PositionAxle78=temp(:,[21 22]); PositionAxle8=temp(:,[23 24]);
 %%
 %RTK放在12轴中间，12铰接点，23铰接点和78轴中间,Mc1头
 % PositionAxle12=table2array(data(:,[90,91]))-table2array(data(1,[90,91]));
@@ -237,8 +221,7 @@ PositionAxle78=(PositionAxle7+PositionAxle8)/2;
 %画轨迹
 figure(2)
 hold on
-title('轨迹')
-% plot(PositionAxle6p(:,1),PositionAxle6p(:,2));
+% title('轨迹') plot(PositionAxle6p(:,1),PositionAxle6p(:,2));
 plot(PositionAxle34(:,1),PositionAxle34(:,2));
 
 long1_2=sqrt((PositionAxle1(:,1)-PositionAxle2(:,1)).^2+(PositionAxle1(:,2)-PositionAxle2(:,2)).^2);%1500
@@ -290,7 +273,8 @@ for i=1:length(PositionAxle1)
         plot(PositionAxle8(i,1),PositionAxle8(i,2),'ob')
         plot(PositionAxle34(i,1),PositionAxle34(i,2),'ob')
         plot(PositionAxle56(i,1),PositionAxle56(i,2),'ob')
-        text(PositionAxle1(i,1),PositionAxle1(i,2),num2str(number))
+        text(PositionAxle1(i,1),PositionAxle1(i,2),num2str(number),"FontSize",18,"Color",colormap(j))
+%         text(PositionAxle1(i,1),PositionAxle1(i,2),{num2str(i),'   '},'Color','b',"FontSize",10,"HorizontalAlignment","right")
 
         
         j=j+1; 
@@ -329,13 +313,9 @@ end
 
 % for i=1:1:6
 %     anglev(:,i)=filtfilt(lpFilt,anglev(:,i));
-% end
-% for i=1:1:3
+% end for i=1:1:3
 %     anglecar(:,i)=filtfilt(lpFilt,anglecar(:,i));
-% end
-% figure(4)
-% hold on
-% plot(anglev(:,6))
+% end figure(4) hold on plot(anglev(:,6))
 
 %手动排除前边振荡的数据
 % anglev(294,1)=-3.12373740849265;
@@ -344,53 +324,40 @@ end
 %     for j=1:1:6
 %         if anglev(i,j)==0
 %             anglev(i,j)=anglev(i+1,j);
-%         end
-%         if anglev(i,j)==0
+%         end if anglev(i,j)==0
 %             anglev(i,j)=anglev(i+2,j);
 %         end
 %     end
-% end
-% % figure(20)
-% % hold on
-% % plot(anglev(:,1))
-% for j=1:1:6
+% end % figure(20) % hold on % plot(anglev(:,1)) for j=1:1:6
 %     if (abs(anglev(1,j)-anglev(2,j))>0.1)...
 %             &&(abs(anglev(1,j)-anglev(3,j))>0.1)
 %         anglev(1,j)=anglev(2,j);
 %     end
-% end
-% temp1=anglev;
-% temp=anglev;
-% for i=2:1:(row-1)
+% end temp1=anglev; temp=anglev; for i=2:1:(row-1)
 %     for j=1:1:6
 %         if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
 %                 &&(abs(temp1(i,j)-temp(i-1,j))<(3/4*pi)...
 %                 &&(abs(temp1(i,j)-temp1(i-1,j))>0.1))
-%             % i
-%             % j
+%             % i % j
 %            temp1(i,j) = temp(i-1,j);
-%         end
-%         if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
+%         end if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
 %                 &&(abs(temp1(i,j)-temp(i-1,j))<(3/4*pi))...
 %                 &&((abs(temp1(i,j)-temp1(i-1,j))>0.1)...
 %                 ||(abs(temp1(i,j)-temp1(i-2,j))>0.1))
 %            temp1(i,j) = temp(i-2,j);
-%         end
-%         if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
+%         end if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
 %                 &&(abs(temp1(i,j)-temp(i-1,j))<(3/4*pi))...
 %                 &&((abs(temp1(i,j)-temp1(i-1,j))>0.1)...
 %                 ||(abs(temp1(i,j)-temp1(i-2,j))>0.1))
 %            temp1(i,j) = temp(i-3,j);
-%         end
-%         if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
+%         end if (abs(temp1(i,j)-temp(i-1,j))>0.1)...
 %                 &&(abs(temp1(i,j)-temp(i-1,j))<(3/4*pi))...
 %                 &&((abs(temp1(i,j)-temp1(i-1,j))>0.1)...
 %                 ||(abs(temp1(i,j)-temp1(i-2,j))>0.1))
 %            temp1(i,j) = temp(i-4,j);
 %         end
 %     end
-% end
-% anglev=temp1;
+% end anglev=temp1;
 
 
 % 
@@ -461,19 +428,13 @@ anglev(:,4)=medfilt1(anglev(:,4));
 anglev(:,5)=medfilt1(anglev(:,5));
 anglev(:,6)=medfilt1(anglev(:,6));
 
-% anglev(:,1)=medfilt1(anglev(:,1));
-% anglev(:,2)=medfilt1(anglev(:,2));
-% anglev(:,3)=medfilt1(anglev(:,3));
-% anglev(:,4)=medfilt1(anglev(:,4));
-% anglev(:,5)=medfilt1(anglev(:,5));
-% anglev(:,6)=medfilt1(anglev(:,6));
+% anglev(:,1)=medfilt1(anglev(:,1)); anglev(:,2)=medfilt1(anglev(:,2));
+% anglev(:,3)=medfilt1(anglev(:,3)); anglev(:,4)=medfilt1(anglev(:,4));
+% anglev(:,5)=medfilt1(anglev(:,5)); anglev(:,6)=medfilt1(anglev(:,6));
 % 
-% anglev(:,1)=medfilt1(anglev(:,1));
-% anglev(:,2)=medfilt1(anglev(:,2));
-% anglev(:,3)=medfilt1(anglev(:,3));
-% anglev(:,4)=medfilt1(anglev(:,4));
-% anglev(:,5)=medfilt1(anglev(:,5));
-% anglev(:,6)=medfilt1(anglev(:,6));
+% anglev(:,1)=medfilt1(anglev(:,1)); anglev(:,2)=medfilt1(anglev(:,2));
+% anglev(:,3)=medfilt1(anglev(:,3)); anglev(:,4)=medfilt1(anglev(:,4));
+% anglev(:,5)=medfilt1(anglev(:,5)); anglev(:,6)=medfilt1(anglev(:,6));
 % 
 anglev(:,1)=medfilt1(anglev(:,1),6);
 anglev(:,2)=medfilt1(anglev(:,2),6);
@@ -497,10 +458,8 @@ alpha=[anglev(:,1)-anglecar(:,1)-delta1(1:(row-1))...
         anglev(:,6)-anglecar(:,3)-delta8(1:(row-1))];
 
 % alpha=[anglev(:,1)-anglecar(:,1)...
-%         anglev(:,2)-anglecar(:,1)...
-%         anglev(:,3)-anglecar(:,2)...
-%         anglev(:,4)-anglecar(:,2)...
-%         anglev(:,5)-anglecar(:,3)...
+%         anglev(:,2)-anglecar(:,1)... anglev(:,3)-anglecar(:,2)...
+%         anglev(:,4)-anglecar(:,2)... anglev(:,5)-anglecar(:,3)...
 %         anglev(:,6)-anglecar(:,3)];
 
 figure(4)
@@ -520,8 +479,7 @@ plot(anglecar(:,3))
 title('anglecar')
 %对侧偏角滤波
 figure(6)
-% hold on
-% plot(alpha(:,1))
+% hold on plot(alpha(:,1))
 
 % lpFilt2 = designfilt('lowpassfir','PassbandFrequency',0.025, ...
 %          'StopbandFrequency',0.035,'PassbandRipple',0.05, ...
@@ -530,12 +488,9 @@ figure(6)
 %     alpha(:,i)=filtfilt(lpFilt2,alpha(:,i));
 % end
 
-% alpha(:,1)=medfilt1(alpha(:,1),6);
-% alpha(:,2)=medfilt1(alpha(:,2),6);
-% alpha(:,3)=medfilt1(alpha(:,3),6);
-% alpha(:,4)=medfilt1(alpha(:,4),6);
-% alpha(:,5)=medfilt1(alpha(:,5),6);
-% alpha(:,6)=medfilt1(alpha(:,6),6);
+% alpha(:,1)=medfilt1(alpha(:,1),6); alpha(:,2)=medfilt1(alpha(:,2),6);
+% alpha(:,3)=medfilt1(alpha(:,3),6); alpha(:,4)=medfilt1(alpha(:,4),6);
+% alpha(:,5)=medfilt1(alpha(:,5),6); alpha(:,6)=medfilt1(alpha(:,6),6);
 
 figure(6)
 hold on
@@ -568,189 +523,153 @@ delta4a=mean(delta4(start:end));
 delta5a=mean(delta5(start:end));
 delta6a=mean(delta6(start:end));
 delta8a=mean(delta8(start:end));
+thetaa_rtk=mean([anglecar(start:end,1)-anglecar(start:end,2)...
+    anglecar(start:end,2)-anglecar(start:end,3)])*180/pi;
+theta_rtk=[anglecar(:,1)-anglecar(:,2)...
+    anglecar(:,2)-anglecar(:,3)]*180/pi;
 save ManualStep1R30v10.mat
 
 % for i=start:1:(row-1)
-%     syms Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4 Fy5 Fy6 Ftx1 Ftx2 Ftx3 Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4 Fty5 Fty6 
-%     syms FJ11x FJ11y FJ12x FJ12y FJ22x FJ22y FJ23x FJ23y f k16 k25 k34
+%     syms Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4 Fy5 Fy6 Ftx1 Ftx2 Ftx3
+%     Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4 Fty5 Fty6 syms FJ11x FJ11y FJ12x
+%     FJ12y FJ22x FJ22y FJ23x FJ23y f k16 k25 k34
 %     
-% %     feq1=Fx1+Fx2+FJ11x==0;
-% %     feq1=Fx1+Fx2+FJ11x==m1*ax(i,1);
-%     A1=zeros(1,36);
-%     A1([1 2 25])=[1 1 1];
-%     B1=m1*ax(i,1);
+% %     feq1=Fx1+Fx2+FJ11x==0; %     feq1=Fx1+Fx2+FJ11x==m1*ax(i,1);
+%     A1=zeros(1,36); A1([1 2 25])=[1 1 1]; B1=m1*ax(i,1);
 % %     feq2=Fy1+Fy2+FJ11y-m1*aycen(i,1)==0;
-%     A2=zeros(1,36);
-%     A2([7 8 26])=[1 1 1];
-%     B2=m1*aycen(i,1);
+%     A2=zeros(1,36); A2([7 8 26])=[1 1 1]; B2=m1*aycen(i,1);
 % %     feq3=Fy1*a1-Fy2*b1-FJ11y*c1==0;
-%     A3=zeros(1,36);
-%     A3([7 8 26])=[a1 -b1 -c1];
-%     B3=0;
+%     A3=zeros(1,36); A3([7 8 26])=[a1 -b1 -c1]; B3=0;
 % %     feq4=Fx3+Fx4+FJ12x+FJ22x==0;
-%     A4=zeros(1,36);
-%     A4([3 4 27 29])=[1 1 1 1];
-%     B4=m2*ax(i,2);
+%     A4=zeros(1,36); A4([3 4 27 29])=[1 1 1 1]; B4=m2*ax(i,2);
 % %     feq5=Fy3+Fy4+FJ12y+FJ22y-m2*aycen(i,2)==0;
-%     A5=zeros(1,36);
-%     A5([9 10 28 30])=[1 1 1 1];
-%     B5=m2*aycen(i,2);
+%     A5=zeros(1,36); A5([9 10 28 30])=[1 1 1 1]; B5=m2*aycen(i,2);
 % %     feq6=Fy3*a2-Fy4*b2+FJ12y*d2-FJ22y*c2==0;
-%     A6=zeros(1,36);
-%     A6([9 10 28 30])=[a2 -b2 d2 -c2];
-%     B6=0;
+%     A6=zeros(1,36); A6([9 10 28 30])=[a2 -b2 d2 -c2]; B6=0;
 % %     feq7=Fx5+Fx6+FJ23x==0;
-%     A7=zeros(1,36);
-%     A7([5 6 31])=[1 1 1];
-%     B7=m3*ax(i,3);
+%     A7=zeros(1,36); A7([5 6 31])=[1 1 1]; B7=m3*ax(i,3);
 % %     feq8=Fy5+Fy6+FJ23y-m3*aycen(i,3)==0;
-%     A8=zeros(1,36);
-%     A8([11 12 32])=[1 1 1];
-%     B8=m3*aycen(i,3);
+%     A8=zeros(1,36); A8([11 12 32])=[1 1 1]; B8=m3*aycen(i,3);
 %  %     feq9=Fy5*a3-Fy6*b3-FJ23y*d3==0;
 %         %公式错误，修改为feq9=Fy5*a3-Fy6*b3+FJ23y*d3==0;
-%             A9=zeros(1,36);
-%             A9([11 12 32])=[a3 -b3 d3];
-%             B9=0;
+%             A9=zeros(1,36); A9([11 12 32])=[a3 -b3 d3]; B9=0;
 %     
 % %     feq10=FJ12x+FJ11x*cosd(theta(i,1))-FJ11y*sind(theta(i,1))==0;
-%     A10=zeros(1,36);
-%     A10([25 26 27])=[cosd(theta(i,1)) -sind(theta(i,1)) 1];
-%     B10=0;
+%     A10=zeros(1,36); A10([25 26 27])=[cosd(theta(i,1)) -sind(theta(i,1))
+%     1]; B10=0;
 % %     feq11=FJ12y+FJ11x*sind(theta(i,1))+FJ11y*cosd(theta(i,1))==0;
-%     A11=zeros(1,36);
-%     A11([25 26 28])=[sind(theta(i,1)) cosd(theta(i,1)) 1];
-%     B11=0;
+%     A11=zeros(1,36); A11([25 26 28])=[sind(theta(i,1)) cosd(theta(i,1))
+%     1]; B11=0;
 % %     feq12=FJ23x+FJ22x*cosd(theta(i,2))-FJ22y*sind(theta(i,2))==0;
-%     A12=zeros(1,36);
-%     A12([29 30 31])=[cosd(theta(i,2)) -sind(theta(i,2)) 1];
-%     B12=0;
+%     A12=zeros(1,36); A12([29 30 31])=[cosd(theta(i,2)) -sind(theta(i,2))
+%     1]; B12=0;
 % %     feq13=FJ23y+FJ22x*sind(theta(i,2))+FJ22y*cosd(theta(i,2))==0;
-%     A13=zeros(1,36);
-%     A13([29 30 32])=[sind(theta(i,2)) cosd(theta(i,2)) 1];
-%     B13=0;
+%     A13=zeros(1,36); A13([29 30 32])=[sind(theta(i,2)) cosd(theta(i,2))
+%     1]; B13=0;
 %     
 % %     feq14=Ftx2+f*G2==0;
-%     A14=zeros(1,36);
-%     A14([14 33])=[1 G2];
-%     B14=0;
+%     A14=zeros(1,36); A14([14 33])=[1 G2]; B14=0;
 % %     feq15=Ftx3+f*G3==0;
-%     A15=zeros(1,36);
-%     A15([15 33])=[1 G3];
-%     B15=0;
+%     A15=zeros(1,36); A15([15 33])=[1 G3]; B15=0;
 % %     feq16=Ftx4+f*G4==0;
-%     A16=zeros(1,36);
-%     A16([16 33])=[1 G4];
-%     B16=0;
+%     A16=zeros(1,36); A16([16 33])=[1 G4]; B16=0;
 % %     feq17=Ftx5+f*G5==0;
-%     A17=zeros(1,36);
-%     A17([17 33])=[1 G5];
-%     B17=0;
+%     A17=zeros(1,36); A17([17 33])=[1 G5]; B17=0;
 % %     feq18=Ftx6+f*G6==0;
-%     A18=zeros(1,36);
-%     A18([18 33])=[1 G6];
-%     B18=0;
+%     A18=zeros(1,36); A18([18 33])=[1 G6]; B18=0;
 % 
 % %     feq19=Fty1-k16*alpha(i,1)==0;
-%     A19=zeros(1,36);
-%     A19([19 34])=[1 -alpha(i,1)];
-%     B19=0;
+%     A19=zeros(1,36); A19([19 34])=[1 -alpha(i,1)]; B19=0;
 % %     feq20=Fty2-k25*alpha(i,2)==0;
-%     A20=zeros(1,36);
-%     A20([20 35])=[1 -alpha(i,2)];
-%     B20=0;
+%     A20=zeros(1,36); A20([20 35])=[1 -alpha(i,2)]; B20=0;
 % %     feq21=Fty3-k34*alpha(i,3)==0;
-%     A21=zeros(1,36);
-%     A21([21 36])=[1 -alpha(i,3)];
-%     B21=0;
+%     A21=zeros(1,36); A21([21 36])=[1 -alpha(i,3)]; B21=0;
 % %     feq22=Fty6-k16*alpha(i,6)==0;
-%     A22=zeros(1,36);
-%     A22([24 34])=[1 -alpha(i,6)];
-%     B22=0;
+%     A22=zeros(1,36); A22([24 34])=[1 -alpha(i,6)]; B22=0;
 % %     feq23=Fty5-k25*alpha(i,5)==0;
-%     A23=zeros(1,36);
-%     A23([23 35])=[1 -alpha(i,5)];
-%     B23=0;
+%     A23=zeros(1,36); A23([23 35])=[1 -alpha(i,5)]; B23=0;
 % %     feq24=Fty4-k34*alpha(i,4)==0;
-%     A24=zeros(1,36);
-%     A24([22 36])=[1 -alpha(i,4)];
-%     B24=0;
+%     A24=zeros(1,36); A24([22 36])=[1 -alpha(i,4)]; B24=0;
 %     
 % %     feq25=Fx1-Ftx1*cosd(delta1(i))+Fty1*sind(delta1(i))==0;
-%     A25=zeros(1,36);
-%     A25([1 13 19])=[1 -cosd(delta1(i)) sind(delta1(i))];
+%     A25=zeros(1,36); A25([1 13 19])=[1 -cosd(delta1(i)) sind(delta1(i))];
 %     B25=0;
 % %     feq26=Fy1-Ftx1*sind(delta1(i))-Fty1*cosd(delta1(i))==0;
-%     A26=zeros(1,36);
-%     A26([7 13 19])=[1 -sind(delta1(i)) -cosd(delta1(i))];
-%     B26=0;
+%     A26=zeros(1,36); A26([7 13 19])=[1 -sind(delta1(i))
+%     -cosd(delta1(i))]; B26=0;
 % %     feq27=Fx2-Ftx2*cosd(delta3(i))+Fty2*sind(delta3(i))==0;
-%     A27=zeros(1,36);
-%     A27([2 14 20])=[1 -cosd(delta3(i)) sind(delta3(i))];
+%     A27=zeros(1,36); A27([2 14 20])=[1 -cosd(delta3(i)) sind(delta3(i))];
 %     B27=0;
 % %     feq28=Fy2-Ftx2*sind(delta3(i))-Fty2*cosd(delta3(i))==0;
-%     A28=zeros(1,36);
-%     A28([8 14 20])=[1 -sind(delta3(i)) -cosd(delta3(i))];
-%     B28=0;
+%     A28=zeros(1,36); A28([8 14 20])=[1 -sind(delta3(i))
+%     -cosd(delta3(i))]; B28=0;
 % %     feq29=Fx3-Ftx3*cosd(delta4(i))+Fty3*sind(delta4(i))==0;
 %     A29=zeros(1,36);
-%     A29(3)=1;A29(15)=-cosd(delta4(i));A29(21)=sind(delta4(i));
-%     B29=0;
+%     A29(3)=1;A29(15)=-cosd(delta4(i));A29(21)=sind(delta4(i)); B29=0;
 % %     feq30=Fy3-Ftx3*sind(delta4(i))-Fty3*cosd(delta4(i))==0;
 %     A30=zeros(1,36);
-%     A30(9)=1;A30(15)=-sind(delta4(i));A30(21)=-cosd(delta4(i));
-%     B30=0;
+%     A30(9)=1;A30(15)=-sind(delta4(i));A30(21)=-cosd(delta4(i)); B30=0;
 % %     feq31=Fx4-Ftx4*cosd(delta5(i))+Fty4*sind(delta5(i))==0;
 %     A31=zeros(1,36);
-%     A31(4)=1;A31(16)=-cosd(delta5(i));A31(22)=sind(delta5(i));
-%     B31=0;
+%     A31(4)=1;A31(16)=-cosd(delta5(i));A31(22)=sind(delta5(i)); B31=0;
 % %     feq32=Fy4-Ftx4*sind(delta5(i))-Fty4*cosd(delta5(i))==0;
 %     A32=zeros(1,36);
-%     A32(10)=1;A32(16)=-sind(delta5(i));A32(22)=-cosd(delta5(i));
-%     B32=0;
+%     A32(10)=1;A32(16)=-sind(delta5(i));A32(22)=-cosd(delta5(i)); B32=0;
 % %     feq33=Fx5-Ftx5*cosd(delta6(i))+Fty5*sind(delta6(i))==0;
 %     A33=zeros(1,36);
-%     A33(5)=1;A33(17)=-cosd(delta6(i));A33(23)=sind(delta6(i));
-%     B33=0;
+%     A33(5)=1;A33(17)=-cosd(delta6(i));A33(23)=sind(delta6(i)); B33=0;
 % %     feq34=Fy5-Ftx5*sind(delta6(i))-Fty5*cosd(delta6(i))==0;
 %     A34=zeros(1,36);
-%     A34(11)=1;A34(17)=-sind(delta6(i));A34(23)=-cosd(delta6(i));
-%     B34=0;
+%     A34(11)=1;A34(17)=-sind(delta6(i));A34(23)=-cosd(delta6(i)); B34=0;
 % %     feq35=Fx6-Ftx6*cosd(delta8(i))+Fty6*sind(delta8(i))==0;
 %     A35=zeros(1,36);
-%     A35(6)=1;A35(18)=-cosd(delta8(i));A35(24)=sind(delta8(i));
-%     B35=0;
+%     A35(6)=1;A35(18)=-cosd(delta8(i));A35(24)=sind(delta8(i)); B35=0;
 % %     feq36=Fy6-Ftx6*sind(delta8(i))-Fty6*cosd(delta8(i))==0;
 %     A36=zeros(1,36);
-%     A36(12)=1;A36(18)=-sind(delta8(i));A36(24)=-cosd(delta8(i));
-%     B36=0;
+%     A36(12)=1;A36(18)=-sind(delta8(i));A36(24)=-cosd(delta8(i)); B36=0;
 % 
-% %     allanswer=solve([feq1 feq2 feq3 feq4 feq5 feq6 feq7 feq8 feq9 feq10 feq11 feq12 feq13 feq14 feq15 ...
-% %         feq16 feq17 feq18 feq19 feq20 feq21 feq22 feq23 feq24 feq25 feq26 feq27 feq28 feq29 feq30 ...
-% %         feq31 feq32 feq33 feq34 feq35 feq36],[Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4 Fy5 Fy6 Ftx1 ...
-% %         Ftx2 Ftx3 Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4 Fty5 Fty6 FJ11x FJ11y FJ12x FJ12y FJ22x...
-% %         FJ22y FJ23x FJ23y f k16 k25 k34]);
+% %     allanswer=solve([feq1 feq2 feq3 feq4 feq5 feq6 feq7 feq8 feq9 feq10
+% feq11 feq12 feq13 feq14 feq15 ... %         feq16 feq17 feq18 feq19 feq20
+% feq21 feq22 feq23 feq24 feq25 feq26 feq27 feq28 feq29 feq30 ... % feq31
+% feq32 feq33 feq34 feq35 feq36],[Fx1 Fx2 Fx3 Fx4 Fx5 Fx6 Fy1 Fy2 Fy3 Fy4
+% Fy5 Fy6 Ftx1 ... %         Ftx2 Ftx3 Ftx4 Ftx5 Ftx6 Fty1 Fty2 Fty3 Fty4
+% Fty5 Fty6 FJ11x FJ11y FJ12x FJ12y FJ22x... %         FJ22y FJ23x FJ23y f
+% k16 k25 k34]);
 % 
 %     A=[A1;A2;A3;A4;A5;A6;A7;A8;A9;A10;A11;A12;A13;A14;A15;A16;A17;A18;A19;...
 %         A20;A21;A22;A23;A24;A25;A26;A27;A28;A29;A30;A31;A32;A33;A34;A35;A36];
 %     B=[B1;B2;B3;B4;B5;B6;B7;B8;B9;B10;B11;B12;B13;B14;B15;B16;B17;B18;B19;...
-%         B20;B21;B22;B23;B24;B25;B26;B27;B28;B29;B30;B31;B32;B33;B34;B35;B36];    
-%    temp0=A\B; 
-% %     k(i,:)=[double(allanswer.k16) double(allanswer.k25) double(allanswer.k34)];
-% %     Fty(i,:)=[double(allanswer.Fty1) double(allanswer.Fty2) double(allanswer.Fty3) double(allanswer.Fty4) ...
+%         B20;B21;B22;B23;B24;B25;B26;B27;B28;B29;B30;B31;B32;B33;B34;B35;B36];
+%    temp0=A\B;
+% %     k(i,:)=[double(allanswer.k16) double(allanswer.k25)
+% double(allanswer.k34)]; %     Fty(i,:)=[double(allanswer.Fty1)
+% double(allanswer.Fty2) double(allanswer.Fty3) double(allanswer.Fty4) ...
 % %         double(allanswer.Fty5) double(allanswer.Fty6)];
-%     k(i,:)=temp0(34:36);
-%     Fty(i,:)=temp0(19:24);
+%     k(i,:)=temp0(34:36); Fty(i,:)=temp0(19:24);
 % 
-% end
-% figure(8)
-% hold on
-% plot(Fty(start:end,1))
-% plot(Fty(start:end,2))
-% plot(Fty(start:end,3))
-% plot(Fty(start:end,4))
-% plot(Fty(start:end,5))
-% plot(Fty(start:end,6))
-% title('Fty')
-% % plot(alpha(:,1),Fty(:,1),'*')
+% end figure(8) hold on plot(Fty(start:end,1)) plot(Fty(start:end,2))
+% plot(Fty(start:end,3)) plot(Fty(start:end,4)) plot(Fty(start:end,5))
+% plot(Fty(start:end,6)) title('Fty') % plot(alpha(:,1),Fty(:,1),'*')
     
+% figure(30)
+% hold on
+% title('v和a_x')
+% yyaxis left
+% plot(aycen(:,1),'k-')
+% plot(aycen(:,2),'r-')
+% plot(aycen(:,3),'g-')
+% yyaxis right
+% plot(v,'b-')
+
+figure(31)
+hold on
+title('车间夹角计算值')
+plot(theta_rtk)
+error=[theta(1:870,1) theta_rtk(1:870,1) theta(1:870,2) theta_rtk(1:870,2);
+    theta(1740:2600,1) theta_rtk(1740:2600,1) theta(1740:2600,2) theta_rtk(1740:2600,2);
+    theta(3052:3720,1) theta_rtk(3052:3720,1) theta(3052:3720,2) theta_rtk(3052:3720,2)];
+errora1=mean([theta(1:870,1) theta_rtk(1:870,1) theta(1:870,2) theta_rtk(1:870,2)]);
+errora2=mean([theta(1740:2600,1) theta_rtk(1740:2600,1) theta(1740:2600,2) theta_rtk(1740:2600,2)]);
+errora3=mean([theta(3052:3720,1) theta_rtk(3052:3720,1) theta(3052:3720,2) theta_rtk(3052:3720,2)]);
+errora4=mean([theta(1:(end-1),1) theta_rtk(:,1) theta(1:(end-1),2) theta_rtk(:,2)]);
+errora=[errora1;errora2;errora3;errora4];
